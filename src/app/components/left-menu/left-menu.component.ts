@@ -35,11 +35,14 @@ export class LeftMenuComponent implements OnInit {
   @Input() public isEmptyMode;
   @Input() public layersVisibilityStatus: Map<string, boolean> = new Map();
   @Output() public menuEventEmitter: Subject<MenuState> = new Subject();
+  @Output() public mode: Subject<boolean> = new Subject();
 
   @ViewChild('share', { static: false }) private shareComponent: ShareComponent;
   @ViewChild('about', { static: false }) private aboutcomponent: AboutComponent;
   @ViewChild('download', { static: false }) private downloadComponent: DownloadComponent;
   @ViewChild('tag', { static: false }) private tagComponent: TagComponent;
+
+  public darkMode = false;
 
   public window;
   public zendeskActive = false;
@@ -98,6 +101,11 @@ export class LeftMenuComponent implements OnInit {
     if (!this.version) {
       this.version = environment.VERSION;
     }
+  }
+
+  public changeMode(){
+    this.darkMode = !this.darkMode;
+    this.mode.next(this.darkMode);
   }
 
   /**
